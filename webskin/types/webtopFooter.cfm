@@ -1,6 +1,7 @@
 <cfsetting enablecfoutputonly="true">
 
 <cfimport taglib="/farcry/core/tags/webskin" prefix="skin" />
+<cfimport taglib="../../tags" prefix="tags" />
 
 <cfoutput>
 				</div>
@@ -15,119 +16,13 @@
 			</div>
 		</div>
 
+
+<tags:loginCheck typename="#stobj.typename#" objectid="#stobj.objectid#">
+
 		<script type="text/javascript">
 		
-// *********************************** Form Login Modal ***************************************** //
-		$j(function(){
-			var interval = 60000 * .1; // .1 of minute (ie 6sec)			
-			var ajax_call = function() { // this will test if currently logged in or not
- 			 //console.log('call done');
-			 $j.ajax({
-			url			: "#application.fapi.getLink(type=stObj.typename,objectid=stObj.objectid,view='displayIsLoggedIn',urlParameters='ajaxmode=1')#",
-			
-			type		: "POST",
-			success		: function(data){
-							//console.log('result:'+data);
-							if (data) {
-								//console.log('logged in - do not show login modal');
-							} else {
-								//console.log('Not logged in - show login modal');
-								showLoginModal();								
-							};
-						  },
-			dataType	: "json",
-			cache:false
-		});
-			 
-			};
-			
-		var intervalID = setInterval(ajax_call, interval);// this starts the testing every so many seconds bassed on interval
-		var showLoginModal = function(){ 
-		openBootstrapLoginModal({ 
-				title : "Are you still there? Your session has timed out.",
-				url : "#application.url.webtop#/index.cfm?type=farQueueTask&view=displayLoginModal",
-				onHidden: function() {intervalID = setInterval(ajax_call, interval);return true;},
-				onShown: function() {
-					clearInterval(intervalID);					
-					return true;}
-			});
-			
-		};
-		
-		var openBootstrapLoginModal = function($settings){
-		$settings = $j.extend({
-			keyboard: false,
-			backdrop: 'static',
-			width: $j(window).width() - 40,
-			height: $j(window).height() - 40,
-			title: 'Administration',
-			url: '',
-			onShown: function() {
-				return true;
-			},
-			onHidden: function() {
-				window.location.href = window.location.href.split('##')[0];
-				return true;
-			}
-		}, $settings);
-		var modalLeftPos = 0; 
-		var fcModalTPL = $j("<div id='fcLoginModal' class='modal hide fade fc-modal' style='z-index: 70000;' tabindex='-1' role='dialog' aria-labelledby='fcLoginModalLabel' aria-hidden='true'><div class='modal-header'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button><h3 id='fcLoginModalLabel'>Modal</h3></div><div class='modal-body' style='width: auto;min-height: 0px;max-height:900px;height: 455px;position: relative;border: 0;padding: 0;background: 0;-webkit-overflow-scrolling:touch;overflow: auto;zoom: 1;'><iframe style='width: 100%;height: 99%;border-width: 0px;margin: 0;padding: 0;' frameborder='0'></iframe></div></div>");
-		var $fcModal = $j("##fcLoginModal");
-		if($fcModal.length == 0) {
-			$j("body").append(fcModalTPL);
-		}
-		
-		$j('##fcLoginModalLabel',$j('##fcLoginModal')).html($settings.title);
-		
-		
-		$j('##fcLoginModal').css('top', '15px');
-		$j('##fcLoginModal').css('margin-left', '0px');
-		$j('##fcLoginModal').css('max-height', $settings.height);
-		
-		$j('##fcLoginModal').css('height', $settings.height);
-		$j('.modal-body').css('max-height', $settings.height);
-		$j('##fcLoginModal').css('width', $settings.width);
-		$j('.modal-body').css('max-width', $settings.width);
-		
-		$j('.modal-body',$j('##fcLoginModal')).css('height', $settings.height - 36);
 	
-	 	modalLeftPos = ( $j(window).width() - $j('##fcLoginModal').width() ) / 2;
-		$j('##fcLoginModal').css('left', modalLeftPos);
-	
-	
-		$j('##fcLoginModal').off("shown").on('shown', function () {
-			
-			if ( $settings.url.indexOf("?") < 0 ) { $settings.url = $settings.url + '?' };
-			$settings.url=$settings.url + '&dialogID=fcLoginModal'
-			$j('iframe',$j('##fcLoginModal')).attr('src',$settings.url);
-			
-			$j("html").css('overflow', 'hidden');
-			$settings.onShown();
-			
-		}).off("hidden").on('hidden', function () {
-			$j("html").css('overflow', 'auto');
-			$j('iframe',$j('##fcLoginModal')).attr('src','');
-			$settings.onHidden();			
-		}).modal({
-			keyboard: $settings.keyboard,
-			backdrop: $settings.backdrop
-			
-		});
-	}; // END openBootstrapLoginModal()
-			
-			
-		
-		
-		
-		}); // end on jquery load
-// *********************************** Form Login Modal END ***************************************** //		
-		$j(function(){
-			
-			
-			
-			
-			
-			
+		$j(function(){			
 			
 			
 			

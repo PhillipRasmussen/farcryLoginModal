@@ -13,7 +13,7 @@
 $j(function(){
 		parent.$j('##fcLoginModal').modal('hide');
 });
-	</script>
+</script>
 </cfoutput>
 <cfelse>
 <skin:view typename="farLogin" webskin="displayLogin" bIgnoreSecurity="true"/>
