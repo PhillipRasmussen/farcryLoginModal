@@ -125,13 +125,13 @@
 			
 		ifvisible.on("wakeup", function(){
     // go back updating data
-	console.log('wake up');
+	//console.log('wake up');
    ajax_call();
 });
 		ifvisible.onEvery(6, function(){
 			
     // Do an animation on the logo only when page is visible
-    console.log('visible');
+    //console.log('visible');
 	
 	ajax_call();
 
