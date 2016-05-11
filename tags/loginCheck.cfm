@@ -17,7 +17,7 @@
 			var ajax_call = function() { // this will test if currently logged in or not
  			 //console.log('call done');
 			 $j.ajax({
-			url			: "#application.fapi.getLink(objectid=objectid,view='displayIsLoggedIn',urlParameters='ajaxmode=1')#",
+			url			: "/index.cfm?view=displayIsLoggedIn&ajaxmode=1",
 			
 			type		: "POST",
 			success		: function(data){
