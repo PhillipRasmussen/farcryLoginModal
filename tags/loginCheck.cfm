@@ -13,7 +13,8 @@
 
 		$j(function(){
 			
-			var interval = 60000 * .1; // .1 of minute (ie 6sec)			
+			var interval = 60000 * .1; // .1 of minute (ie 6sec)
+				
 			var ajax_call = function() { // this will test if currently logged in or not
  			 //console.log('call done');
 			 $j.ajax({
@@ -21,12 +22,16 @@
 			
 			type		: "POST",
 			success		: function(data){
+				
 							//console.log('result:'+data);
 							if (data) {
 								//console.log('logged in - do not show login modal');
+								if ($j('##fcLoginModal').length) {
+								$j('##fcLoginModal').modal('hide');
+								};
 							} else {
 								//console.log('Not logged in - show login modal');
-								showLoginModal();
+								m = showLoginModal();
 								//addEvent(document.getElementById('fcModal').contentWindow.document,"mousemove",wakeUp);							
 							};
 						  },
@@ -51,18 +56,7 @@
 			
 		};
 		
-		var getTopBody = function() {
-		var $topBody;
-		var $currentDocument = $("document");
-    while ($currentDocument.parent()){
-         if ($currentDocument.find("body")){
-              $topBody = $currentDocument.find("body");
-              break;
-         }
-         $currentDocument = $currentDocument.parent();
-    }
-	return $topBody;
-		}// end getTopBody
+		
 		
 		
 		var openBootstrapLoginModal = function($settings){
@@ -82,7 +76,7 @@
 			}
 		}, $settings);
 		var modalLeftPos = 0; 
-		var fcModalTPL = $j("<div id='fcLoginModal' class='modal hide fade fc-modal' style='z-index: 70000;' tabindex='-1' role='dialog' aria-labelledby='fcLoginModalLabel' aria-hidden='true'><div class='modal-header'><button type='button' class='close' data-dismiss='modal' aria-hidden='true'>&times;</button><h3 id='fcLoginModalLabel'>Modal</h3></div><div class='modal-body' style='width: auto;min-height: 0px;max-height:900px;height: 455px;position: relative;border: 0;padding: 0;background: 0;-webkit-overflow-scrolling:touch;overflow: auto;zoom: 1;'><iframe style='width: 100%;height: 99%;border-width: 0px;margin: 0;padding: 0;' frameborder='0'></iframe></div></div>");
+		var fcModalTPL = $j("<div id='fcLoginModal' class='modal hide fade fc-modal' style='z-index: 70000;' tabindex='-1' role='dialog' aria-labelledby='fcLoginModalLabel' aria-hidden='true'><div class='modal-header'><h3 id='fcLoginModalLabel'>Modal</h3></div><div class='modal-body' style='width: auto;min-height: 0px;max-height:900px;height: 455px;position: relative;border: 0;padding: 0;background: 0;-webkit-overflow-scrolling:touch;overflow: auto;zoom: 1;'><iframe style='width: 100%;height: 99%;border-width: 0px;margin: 0;padding: 0;' frameborder='0'></iframe></div></div>");
 		var $fcModal = $j("##fcLoginModal");
 		if($fcModal.length == 0) {
 			$j("body").append(fcModalTPL);
@@ -130,13 +124,13 @@
 			
 		ifvisible.on("wakeup", function(){
     // go back updating data
-	//console.log('wake up');
+	console.log('wake up');
    ajax_call();
 });
 	ifvisible.onEvery(6, function(){
 			
     // Do an animation on the logo only when page is visible
-    //console.log('visible');
+    console.log('visible');
 	
 	ajax_call();
 
